@@ -41,7 +41,7 @@ export class UsuarioController {
   }
 
   @Post()
-  @UseGuards(PermissionGuard(Permission.Admin, Permission.UsuarioPost))
+  @UseGuards(PermissionGuard(Permission.Admin, Permission.UsuarioPost, Permission.Giovanni))
   async store(@Body() body: CreateUsuarioDto) {
     return await this.usuarioService.store(body);
   }

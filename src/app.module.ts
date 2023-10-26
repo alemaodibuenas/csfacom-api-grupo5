@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { FotoModule } from './foto/foto.module';
 import { LoggerModule } from './logger/logger.module';
 import { CaslModule } from './casl/casl.module';
+import { NoticiasModule } from './noticias/noticias.module';
 import LogsMiddleware from './logger/logs.middleware';
 
 @Module({
@@ -30,6 +31,7 @@ import LogsMiddleware from './logger/logs.middleware';
     FotoModule,
     LoggerModule,
     CaslModule,
+    NoticiasModule,
   ],
   controllers: [AppController],
   providers: [AppService],

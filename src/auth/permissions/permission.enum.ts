@@ -8,6 +8,7 @@ enum Permission {
   UsuarioRead = 'UsuarioRead',
   UsuarioUpdate = 'UsuarioUpdate',
   UsuarioDelete = 'UsuarioDelete',
+  Giovanni = 'Giovanni'
 }
 
 export default Permission;
