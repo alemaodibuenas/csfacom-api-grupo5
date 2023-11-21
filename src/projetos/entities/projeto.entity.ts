@@ -8,20 +8,20 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Noticia {
+export class Projeto {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 500 })
-  image: string;
+  @Column()
+  icon: string;
 
   @Column({ length: 500, nullable: false })
   title: string;
 
-  @Column({ length: 500 })
-  text: string;
+  @Column({ length: 500, nullable: false })
+  description: string;
 
-  @Column({ unique: true })
+  @Column({ length: 500 })
   url: string;
 
   @CreateDateColumn()
@@ -33,5 +33,3 @@ export class Noticia {
   @DeleteDateColumn()
   deleted_at: Date;
 }
-
-///url não vai receber
