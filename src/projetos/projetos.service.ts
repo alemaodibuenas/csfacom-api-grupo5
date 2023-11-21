@@ -3,23 +3,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Pagination } from 'src/paginate/pagination';
 import { PaginationOptionsInterface } from 'src/paginate/pagination.options.interface';
 import { FindOneOptions, Like, Repository } from 'typeorm';
-import { CreateNoticiaDto } from './dto/create-noticia.dto';
-import { UpdateNoticiaDto } from './dto/update-noticia.dto';
-import { Noticia } from './entities/noticia.entity';
-import { removerCaracteresEspeciais } from 'src/helpers/utils';
+import { CreateProjetoDto } from './dto/create-projeto.dto';
+import { UpdateProjetoDto } from './dto/update-projeto.dto';
+import { Projeto } from './entities/projeto.entity';
 
 @Injectable()
-export class NoticiasService {
+export class ProjetosService {
   constructor(
-    @InjectRepository(Noticia)
-    private readonly repository: Repository<Noticia>,
+    @InjectRepository(Projeto)
+    private readonly repository: Repository<Projeto>,
   ) {}
 
   createPage = (
     results,
     total,
     options: PaginationOptionsInterface,
-  ): Pagination<Noticia> => {
+  ): Pagination<Projeto> => {
     const offset = Number(options.offset);
     const limit = Number(options.limit);
     const page = Number(total);
@@ -47,7 +46,7 @@ export class NoticiasService {
 
     const page_total = Math.ceil(total / limit);
     const status = true;
-    return new Pagination<Noticia>({
+    return new Pagination<Projeto>({
       status,
       results,
       total,
@@ -62,7 +61,7 @@ export class NoticiasService {
     options: PaginationOptionsInterface,
     optionsLike: string[],
     customWhere = {},
-  ): Promise<Pagination<Noticia>> {
+  ): Promise<Pagination<Projeto>> {
     let optionWhere = {};
     optionWhere = customWhere;
     if (options.like !== 'all') {
@@ -82,12 +81,10 @@ export class NoticiasService {
     return this.createPage(results, total, options);
   }
 
-  create(createNoticiaDto: CreateNoticiaDto): Promise<Noticia | any> {
-    const url = createNoticiaDto.title;
-    createNoticiaDto['url'] = removerCaracteresEspeciais(url);
-    const noticia = this.repository.create(createNoticiaDto);
+  create(createProjetoDto: CreateProjetoDto): Promise<Projeto | any> {
+    const projeto = this.repository.create(createProjetoDto);
     return this.repository
-      .save(noticia)
+      .save(projeto)
       .then((resultado) => {
         return {
           status: true,
@@ -102,39 +99,33 @@ export class NoticiasService {
       });
   }
 
-  findAll(): Promise<Noticia[]> {
+  findAll(): Promise<Projeto[]> {
     return this.repository.find({ order: { title: 'ASC' } });
   }
 
-  findOne(id: string): Promise<Noticia> {
+  findOne(id: string): Promise<Projeto> {
     return this.repository.findOneBy({
       id: id,
-    });
-  }
-
-  findOneUrl(url: string): Promise<Noticia> {
-    return this.repository.findOneBy({
-      url: url,
     });
   }
 
   async update(
     id: string,
-    updateNoticiaDto: UpdateNoticiaDto,
-  ): Promise<Noticia> {
-    const noticia = await this.repository.preload({
+    updateProjetoDto: UpdateProjetoDto,
+  ): Promise<Projeto> {
+    const projeto = await this.repository.preload({
       id: id,
-      ...updateNoticiaDto,
+      ...updateProjetoDto,
     });
-    if (!noticia) {
-      throw new NotFoundException(`Noticia ${id} not found`);
+    if (!projeto) {
+      throw new NotFoundException(`Projeto ${id} not found`);
     }
-    return this.repository.save(noticia);
+    return this.repository.save(projeto);
   }
 
   async remove(id: string) {
-    const noticia = await this.findOne(id);
-    return this.repository.remove(noticia);
+    const projeto = await this.findOne(id);
+    return this.repository.remove(projeto);
   }
 
   async destroy(id: string) {
@@ -142,7 +133,7 @@ export class NoticiasService {
     this.repository.softDelete({ id });
   }
 
-  async findOneOrFail(options: FindOneOptions<Noticia>): Promise<Noticia> {
+  async findOneOrFail(options: FindOneOptions<Projeto>): Promise<Projeto> {
     try {
       return this.repository.findOneOrFail(options);
     } catch (error) {

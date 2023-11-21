@@ -19,3 +19,16 @@ export const convertNumberOrDate = (str: string): string => {
 
   return str;
 };
+
+export const removerCaracteresEspeciais = (input: string): string => {
+  // Remove acentuação
+  const semAcentos = input.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  // Substitui "ç" por "c"
+  const semCedilha = semAcentos.replace(/ç/g, 'c');
+
+  // Remove caracteres especiais (exceto letras e números)
+  const semEspeciais = semCedilha.replace(/[^a-zA-Z0-9]/g, '');
+
+  return semEspeciais;
+};

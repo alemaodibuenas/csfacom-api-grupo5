@@ -1,19 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateNoticiaDto {
-  @ApiProperty({ example: 'imagem' })
+export class CreateProjetoDto {
+  @ApiProperty({ example: 'Icon' })
   @IsString()
   @IsNotEmpty()
-  image: string;
+  icon: string;
 
   @ApiProperty({ example: 'Título' })
   @IsString()
-  @IsNotEmpty()
   title: string;
 
-  @ApiProperty({ example: 'Texto' })
+  @ApiProperty({ example: 'Descrição' })
   @IsOptional()
   @IsString()
-  text: string;
+  description: string;
+
+  @ApiProperty({ example: 'url' })
+  @IsOptional()
+  @IsString()
+  url: string;
 }

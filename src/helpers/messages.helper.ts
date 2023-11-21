@@ -19,4 +19,5 @@ export const MessagesHelper = {
   PERMISSION_EMPTY:
     'Permissões são necessárias para realização de ações no sistema.',
   PERMISSION_NOT_FOUND: 'Permisssão não existe.',
+  DADOS_EMPTY: 'Nada para mostrar.',
 };
