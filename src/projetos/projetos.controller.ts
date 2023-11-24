@@ -33,9 +33,6 @@
 //   }
 // }
 
-
-
-
 import {
   Body,
   Controller,
@@ -60,6 +57,7 @@ import { Pagination } from 'src/paginate/pagination';
 import { Projeto } from './entities/projeto.entity';
 import PermissionGuard from 'src/auth/permissions/permission.guard';
 import Permission from 'src/auth/permissions/permission.enum';
+import { MessagesHelper } from 'src/helpers/messages.helper';
 
 @ApiTags('projetos')
 @Controller('projetos')
@@ -87,8 +85,13 @@ export class ProjetosController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.projetosService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const projetos = await this.projetosService.findOne(id);
+
+    return {
+      status: !!projetos,
+      data: projetos || MessagesHelper.DADOS_EMPTY,
+    };
   }
 
   @Patch(':id')
