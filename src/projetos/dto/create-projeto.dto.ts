@@ -16,7 +16,7 @@ export class CreateProjetoDto {
   @IsString()
   description: string;
 
-  @ApiProperty({ example: 'texto' })
+  @ApiProperty({ example: 'Matéria' })
   @IsOptional()
   @IsString()
   texto: string;

@@ -1,8 +1,11 @@
+import { Pessoa } from 'src/pessoa/entities/pessoa.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -15,14 +18,17 @@ export class Projeto {
   @Column()
   imagem: string;
 
-  @Column({ length: 500, nullable: false })
+  @Column({ length: 1000, nullable: false })
   title: string;
 
-  @Column({ length: 500, nullable: false })
+  @Column('text')
   description: string;
 
-  @Column({ length: 10000 })
+  @Column('text')
   texto: string;
+
+  @ManyToMany(() => Pessoa, (pessoa) => pessoa.projetos)
+  participantes: Pessoa[];
 
   @CreateDateColumn()
   created_at: Date;

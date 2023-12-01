@@ -1,3 +1,4 @@
+import { Projeto } from 'src/projetos/entities/projeto.entity';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
 import {
   Column,
@@ -5,6 +6,8 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -19,17 +22,21 @@ export class Pessoa {
   @Column({ length: 500, nullable: false })
   nome: string;
 
-  @Column({ length: 255 })
-  endereco: string;
-
-  @Column({ length: 11 })
+  @Column({ length: 15 })
   telefone: string;
 
-  @Column({ length: 255 })
-  documento: string;
+  @Column({ length: 100 })
+  rga?: string;
 
-  @Column({ length: 255 })
-  tipoDocumentoo: string;
+  @Column()
+  foto?: string;
+
+  @ManyToMany(() => Projeto, (projeto) => projeto.participantes)
+  @JoinTable()
+  projetos?: Projeto[];
+
+  @OneToOne(() => Usuario, (usuario) => usuario)
+  usuario?: Usuario;
 
   @CreateDateColumn()
   created_at: Date;
@@ -39,7 +46,4 @@ export class Pessoa {
 
   @DeleteDateColumn()
   deleted_at: Date;
-
-  @OneToOne(() => Usuario, (usuario: Usuario) => usuario)
-  usuario?: Usuario;
 }

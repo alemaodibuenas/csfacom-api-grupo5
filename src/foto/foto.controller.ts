@@ -3,27 +3,21 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   ParseUUIDPipe,
   HttpStatus,
   HttpCode,
-  Put,
+  UseGuards,
   UseInterceptors,
   UploadedFile,
-  Res,
-  UploadedFiles,
-  UseGuards,
 } from '@nestjs/common';
 import { FotoService } from './foto.service';
 import { CreateFotoDto } from './dto/create-foto.dto';
 import { UpdateFotoDto } from './dto/update-foto.dto';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { FotoEntity } from './entities/foto.entity';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('foto')
 @Controller('foto')
@@ -37,23 +31,10 @@ export class FotoController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FilesInterceptor('images'))
   async uploadImage(@UploadedFile() file) {
-    return await this.fotoService.uploadFileToObjectStorage(file, 'image_');
+    return await this.fotoService.store(file);
   }
-  @Post('documento')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadDocumento(@UploadedFile() file) {
-    return await this.fotoService.uploadFileToObjectStorage(file, 'documento_');
-  }
-
-  // @Patch(':id')
-  // async update(
-  //   @Param('id', new ParseUUIDPipe()) id: string,
-  //   @Body() body: UpdateFotoDto,
-  // ) {
-  //   return await this.fotoService.update(id, body);
-  // }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -61,14 +42,3 @@ export class FotoController {
     await this.fotoService.destroy(id);
   }
 }
-
-// {
-// "fieldname": "image",
-// "originalname": "SER-2-5-411x565-1.webp",
-// "encoding": "7bit",
-// "mimetype": "image/webp",
-// "destination": "./uploads",
-// "filename": "a1e4e1203fd7815d4ed216951765495e",
-// "path": "uploads/a1e4e1203fd7815d4ed216951765495e",
-// "size": 29200
-// }

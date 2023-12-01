@@ -53,6 +53,4 @@ export class CreateUsuarioDto {
   })
   // @Type(() => Permission)
   permissions: Permission[];
-
-
 }

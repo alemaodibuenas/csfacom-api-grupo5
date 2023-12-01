@@ -13,7 +13,6 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger/dist';
 import Permission from 'src/auth/permissions/permission.enum';
 import PermissionGuard from 'src/auth/permissions/permission.guard';
@@ -41,7 +40,13 @@ export class UsuarioController {
   }
 
   @Post()
-  @UseGuards(PermissionGuard(Permission.Admin, Permission.UsuarioPost, Permission.Giovanni))
+  @UseGuards(
+    PermissionGuard(
+      Permission.Admin,
+      Permission.UsuarioPost,
+      Permission.Giovanni,
+    ),
+  )
   async store(@Body() body: CreateUsuarioDto) {
     return await this.usuarioService.store(body);
   }
@@ -55,10 +60,7 @@ export class UsuarioController {
     }
     const createPessoaDto = {
       nome: 'Admin',
-      endereco: 'sem',
       telefone: '000',
-      documento: 'sem',
-      tipoDocumentoo: 'sem',
     };
 
     const pessoa = await this.pessoaService.create(createPessoaDto);

@@ -6,6 +6,8 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { CreateProjetoDto } from 'src/projetos/dto/create-projeto.dto';
+import { Projeto } from 'src/projetos/entities/projeto.entity';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 export class CreatePessoaDto {
@@ -14,23 +16,30 @@ export class CreatePessoaDto {
   @IsNotEmpty()
   nome: string;
 
-  @ApiProperty({ example: 'Endereço' })
+  @ApiProperty({ example: 'url foto' })
   @IsString()
   @IsNotEmpty()
-  endereco: string;
+  foto?: string;
 
   @ApiProperty({ example: 'Telefone' })
   @IsOptional()
   @IsString()
   telefone: string;
 
-  @ApiProperty({ example: 'Documento' })
+  @ApiProperty({ example: 'rga' })
   @IsOptional()
   @IsString()
-  documento: string;
+  rga?: string;
 
-  @ApiProperty({ example: 'Tipo de Documento' })
+  @ApiProperty({
+    type: () => [CreateProjetoDto],
+    example: [
+      {
+        /* dados do projeto */
+      },
+    ],
+  })
   @IsOptional()
-  @IsString()
-  tipoDocumentoo: string;
+  @IsString({ each: true })
+  projetos?: Projeto[];
 }
