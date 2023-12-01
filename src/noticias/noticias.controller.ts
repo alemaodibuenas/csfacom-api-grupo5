@@ -59,16 +59,6 @@ export class NoticiasController {
     };
   }
 
-  @Get('url/:id')
-  async findOneUrl(@Param('id') url: string) {
-    const noticias = await this.noticiasService.findOneUrl(url);
-
-    return {
-      status: !!noticias,
-      data: noticias || MessagesHelper.DADOS_EMPTY,
-    };
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePessoaDto: UpdateNoticiaDto) {
     return this.noticiasService.update(id, updatePessoaDto);

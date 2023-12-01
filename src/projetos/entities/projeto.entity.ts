@@ -13,7 +13,7 @@ export class Projeto {
   id: string;
 
   @Column()
-  icon: string;
+  imagem: string;
 
   @Column({ length: 500, nullable: false })
   title: string;
@@ -21,8 +21,8 @@ export class Projeto {
   @Column({ length: 500, nullable: false })
   description: string;
 
-  @Column({ length: 500 })
-  url: string;
+  @Column({ length: 10000 })
+  texto: string;
 
   @CreateDateColumn()
   created_at: Date;

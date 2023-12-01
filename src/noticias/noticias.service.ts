@@ -112,12 +112,6 @@ export class NoticiasService {
     });
   }
 
-  findOneUrl(url: string): Promise<Noticia> {
-    return this.repository.findOneBy({
-      url: url,
-    });
-  }
-
   async update(
     id: string,
     updateNoticiaDto: UpdateNoticiaDto,

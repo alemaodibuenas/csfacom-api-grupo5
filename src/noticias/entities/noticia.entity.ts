@@ -12,17 +12,17 @@ export class Noticia {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 500 })
-  image: string;
+  @Column()
+  imagem: string;
 
   @Column({ length: 500, nullable: false })
   title: string;
 
-  @Column({ length: 500 })
-  text: string;
+  @Column({ length: 500, nullable: false })
+  description: string;
 
-  @Column({ unique: true })
-  url: string;
+  @Column({ length: 10000 })
+  texto: string;
 
   @CreateDateColumn()
   created_at: Date;
